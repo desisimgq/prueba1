@@ -1,0 +1,112 @@
+*       *********************************************************
+*       *                                                         
+*       * 15/01/2003            SISTEMA.MPR             14:01:13  
+*       *                                                         
+*       *********************************************************
+*       *                                                         
+*       * Nombre del autor                                        
+*       *                                                         
+*       * Copyright (C) 2003 Nombre de la organización            
+*       * Dirección                                               
+*       * Ciudad,     Código pos                                  
+*       * País                                              
+*       *                                                         
+*       * Descripción:                                            
+*       * Este programa se generó automáticamente por GENMENU.    
+*       *                                                         
+*       *********************************************************
+
+
+*       *********************************************************
+*       *                                                         
+*       *                    Definición de menú                   
+*       *                                                         
+*       *********************************************************
+*
+
+SET SYSMENU TO
+SET SYSMENU AUTOMATIC
+
+DEFINE PAD _msm_file OF _MSYSMENU PROMPT "\<Archivo" COLOR SCHEME 3 ;
+	NEGOTIATE  LEFT, NONE ;
+	KEY ALT+A, "" ;
+	MESSAGE "Crea, abre, guarda o imprime archivos, o sale de Visual FoxPro"
+DEFINE PAD _0v00u1tth OF _MSYSMENU PROMPT "\<Bases" COLOR SCHEME 3 ;
+	KEY ALT+B, "" ;
+	MESSAGE "Actualización de Bases de Datos"
+DEFINE PAD _0v00u1tti OF _MSYSMENU PROMPT "\<Reportes" COLOR SCHEME 3 ;
+	KEY ALT+R, "" ;
+	MESSAGE "Menu de Reportes"
+DEFINE PAD _0v00u1ttj OF _MSYSMENU PROMPT "\<Utilidades" COLOR SCHEME 3 ;
+	KEY ALT+U, "" ;
+	MESSAGE "Menu de Utilidades"
+DEFINE PAD _msm_systm OF _MSYSMENU PROMPT "\<Información" COLOR SCHEME 3 ;
+	KEY ALT+U, "" ;
+	MESSAGE "Menu de Ayuda"
+ON PAD _msm_file OF _MSYSMENU ACTIVATE POPUP _mfile
+ON PAD _0v00u1tth OF _MSYSMENU ACTIVATE POPUP bases
+ON PAD _0v00u1tti OF _MSYSMENU ACTIVATE POPUP reportes
+ON PAD _0v00u1ttj OF _MSYSMENU ACTIVATE POPUP musica
+ON PAD _msm_systm OF _MSYSMENU ACTIVATE POPUP informació
+
+DEFINE POPUP _mfile MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF _mfile PROMPT "Configuración de Impresora" ;
+	KEY CTRL+P, "Ctrl+P" ;
+	MESSAGE "Configura la Impresora Seleccionada para uso en El sistema"
+DEFINE BAR 2 OF _mfile PROMPT "\-"
+DEFINE BAR 3 OF _mfile PROMPT "Cambiar Sesion de Usuario" ;
+	MESSAGE "Cambia la Sesion del Usuario"
+DEFINE BAR 4 OF _mfile PROMPT "\-"
+DEFINE BAR 5 OF _mfile PROMPT "\<Salir" ;
+	MESSAGE "Sale del Sistema"
+ON SELECTION BAR 1 OF _mfile sys(1037)
+ON SELECTION BAR 3 OF _mfile do forms inicio
+ON SELECTION BAR 5 OF _mfile goApp.Release
+
+DEFINE POPUP bases MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF bases PROMPT "Marcas Manuales"
+DEFINE BAR 2 OF bases PROMPT "Grabación de Bajas"
+ON SELECTION BAR 1 OF bases do forms Manual
+ON SELECTION BAR 2 OF bases do forms Bajas
+
+DEFINE POPUP reportes MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF reportes PROMPT "Reporte diario de asistencia por dependencia"
+DEFINE BAR 2 OF reportes PROMPT "Reporte diario de inasistencia por dependencia"
+DEFINE BAR 3 OF reportes PROMPT "Reporte diario de llegadas tarde por dependencia"
+DEFINE BAR 4 OF reportes PROMPT "Resumen por empleado"
+DEFINE BAR 5 OF reportes PROMPT "Reporte de personal por docigo de marcado"
+ON SELECTION BAR 1 OF reportes do forms P_Repor1
+
+DEFINE POPUP musica MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF musica PROMPT "Mantenimiento" ;
+	SKIP FOR m.cTipoUser = "O" ;
+	MESSAGE "Mantenimiento y Reindexamiento de Archivos"
+DEFINE BAR 2 OF musica PROMPT "Backup" ;
+	SKIP FOR m.cTipoUser = "O" ;
+	MESSAGE "Respaldo a Diskette y Disco Duro"
+DEFINE BAR 3 OF musica PROMPT "Cambio de Clave" ;
+	SKIP FOR m.cTipoUser = "O" ;
+	MESSAGE "Actualización de Usuarios"
+DEFINE BAR 4 OF musica PROMPT "Configuración" ;
+	SKIP FOR m.cTipoUser = "O" ;
+	MESSAGE "Configuración"
+DEFINE BAR 5 OF musica PROMPT "\-"
+DEFINE BAR 6 OF musica PROMPT "Desktop" ;
+	MESSAGE "Configuración de Desktop"
+DEFINE BAR 7 OF musica PROMPT "Winzip" ;
+	MESSAGE "Winzip para Respaldos"
+DEFINE BAR 8 OF musica PROMPT "Calculadora"
+DEFINE BAR 9 OF musica PROMPT "Calendario"
+ON SELECTION BAR 1 OF musica Do Forms Reindexar
+ON SELECTION BAR 2 OF musica Do forms Backup
+ON SELECTION BAR 3 OF musica do forms usuarios
+ON SELECTION BAR 4 OF musica Do forms indica
+ON SELECTION BAR 6 OF musica do forms desktop
+ON SELECTION BAR 7 OF musica ! /n c:\archiv~1\winzip\winzip32.exe
+ON SELECTION BAR 8 OF musica run /n otros\calc.exe
+ON SELECTION BAR 9 OF musica do forms calendario
+
+DEFINE POPUP informació MARGIN RELATIVE SHADOW COLOR SCHEME 4
+DEFINE BAR 1 OF informació PROMPT "Información del Diseñador del Sistema" ;
+	MESSAGE "Información del Diseñador del Sistema"
+ON SELECTION BAR 1 OF informació do forms autor
